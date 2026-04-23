@@ -1,3 +1,5 @@
 output/
 tea_debug.log
 wandb/
+CIFAR-10-data-exploration/
+src/__pycache__/
