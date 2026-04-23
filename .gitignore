@@ -3,3 +3,13 @@ tea_debug.log
 wandb/
 CIFAR-10-data-exploration/
 src/__pycache__/
+splits/cifar10_train12000_val10_seed42.json
+output/alexnet/04-23-14-59-06_alexnet
+output/baseline/04-23-15-00-51_baseline
+output/inception_v3/04-23-14-57-46_inception_v3
+output/resnet18/04-23-14-56-32_resnet18
+output/run_a_deeper/04-23-15-10-34_run_a_deeper
+output/run_b_kernel5/04-23-15-02-43_run_b_kernel5
+output/run_c_avgpool/04-23-13-56-18_run_c_avgpool
+output/vgg11_bn/04-23-14-58-55_vgg11_bn
+cifar-10-python/cifar-10-batches-py
