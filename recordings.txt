@@ -1,0 +1,100 @@
+ Code writing
+1. wandb以及yaml config
+One file contains shared defaults + all 8 experiments:
+project:
+  name: sdm378_hw2
+  seed: 42
+  output_dir: outputs
+  device: auto
+
+data:
+  dataset: cifar10_hf
+  image_size: 32
+  num_classes: 10
+  num_workers: 0
+  train_limit: null
+  test_limit: null
+  normalization:
+    mean: [0.4914, 0.4822, 0.4465]
+    std: [0.2470, 0.2435, 0.2616]
+
+train:
+  epochs: 10
+  batch_size: 64
+  optimizer: adam
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  scheduler: null
+
+wandb:
+  enable: true
+  entity: your_entity
+  project: sdm378_hw2
+  group: main_comparison
+  tags: [cifar10, assignment2, pytorch]
+  mode: online   # online/offline/disabled
+
+experiments:
+  - id: baseline
+    model_family: CustomCNN
+    architecture:
+      conv_layers: 2
+      kernel_size: 3
+      pooling_type: max
+      channels: [32, 64]
+      dropout: 0.30
+
+  - id: run_a_deeper
+    model_family: CustomCNN
+    architecture:
+      conv_layers: 3
+      kernel_size: 3
+      pooling_type: max
+      channels: [32, 64, 128]
+      dropout: 0.30
+
+  - id: run_b_kernel5
+    model_family: CustomCNN
+    architecture:
+      conv_layers: 2
+      kernel_size: 5
+      pooling_type: max
+      channels: [32, 64]
+      dropout: 0.30
+
+  - id: run_c_avgpool
+    model_family: CustomCNN
+    architecture:
+      conv_layers: 2
+      kernel_size: 3
+      pooling_type: avg
+      channels: [32, 64]
+      dropout: 0.30
+
+  - id: alexnet
+    model_family: AlexNet
+    architecture:
+      variant: cifar_adapted
+
+  - id: vgg11_bn
+    model_family: VGG
+    architecture:
+      variant: vgg11_bn_cifar
+
+  - id: inception_v3
+    model_family: Inception
+    data_override:
+      image_size: 75
+    train_override:
+      batch_size: 32
+    architecture:
+      variant: inception_v3_aux_off
+
+  - id: resnet18
+    model_family: ResNet
+    architecture:
+      variant: resnet18_cifar_stem
+
+Experiment recordings
+Initial ipynb testing
+1. InceptionV3_CIFAR is very slow(3 epochs took almost 1.5 hours)

@@ -1,0 +1,125 @@
+project:
+  name: sdm378_hw2
+  seed: 42
+  output_dir: /mnt/home/zengyitao/cv-hw2/output
+  device: auto
+
+data:
+  dataset: cifar10_torchvision_local
+  root_dir: /mnt/home/zengyitao/cv-hw2/cifar-10-python
+  split_file: /mnt/home/zengyitao/cv-hw2/splits/cifar10_train12000_val10_seed42.json
+  image_size: 32
+  num_classes: 10
+  num_workers: 0
+  val_split: 0.1
+  split_seed: 42
+  stratified_split: true
+  train_limit: null
+  val_limit: null
+  test_limit: null
+  normalization:
+    mean: [0.4914, 0.4822, 0.4465]
+    std: [0.2470, 0.2435, 0.2616]
+
+train:
+  epochs: 100
+  batch_size: 64
+  optimizer: adam
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  # Learning rate (L.R.) schedule: decay follows one cosine from initial L.R. to eta_min over t_max steps.
+  # Omit t_max to default to train.epochs.
+  scheduler:
+    type: cosineannealinglr
+    eta_min: 1.0e-5
+  early_stopping:
+    enable: true
+    monitor: val_loss
+    mode: min
+    patience: 5
+    min_delta: 0.001
+
+wandb:
+  enable: true
+  entity: tyler_zeng-southern-university-of-science-technology
+  project: sdm378_hw2
+  group: main_comparison
+  tags: [cifar10, assignment2, pytorch]
+  mode: online
+
+experiments:
+  - id: baseline
+    name: Baseline
+    model_family: CustomCNN
+    architecture_note: 2 conv, 3x3 kernels, 2 MaxPool
+    architecture:
+      conv_layers: 2
+      kernel_size: 3
+      pooling_type: max
+      channels: [32, 64]
+      dropout: 0.30
+
+  - id: run_a_deeper
+    name: Run_A_DeeperConv
+    model_family: CustomCNN
+    architecture_note: 3 conv, 3x3 kernels, 2 MaxPool
+    architecture:
+      conv_layers: 3
+      kernel_size: 3
+      pooling_type: max
+      channels: [32, 64, 128]
+      dropout: 0.30
+
+  - id: run_b_kernel5
+    name: Run_B_Kernel5
+    model_family: CustomCNN
+    architecture_note: 2 conv, 5x5 kernels, 2 MaxPool
+    architecture:
+      conv_layers: 2
+      kernel_size: 5
+      pooling_type: max
+      channels: [32, 64]
+      dropout: 0.30
+
+  - id: run_c_avgpool
+    name: Run_C_AvgPool
+    model_family: CustomCNN
+    architecture_note: 2 conv, 3x3 kernels, 2 AvgPool
+    architecture:
+      conv_layers: 2
+      kernel_size: 3
+      pooling_type: avg
+      channels: [32, 64]
+      dropout: 0.30
+
+  - id: alexnet
+    name: AlexNet_CIFAR
+    model_family: AlexNet
+    architecture_note: CIFAR-adapted AlexNet-style network
+    architecture:
+      variant: cifar_adapted
+
+  - id: vgg11_bn
+    name: VGG11_BN_CIFAR
+    model_family: VGG
+    architecture_note: torchvision vgg11_bn adapted classifier
+    architecture:
+      variant: vgg11_bn_cifar
+
+  - id: inception_v3
+    name: InceptionV3_CIFAR
+    model_family: Inception
+    architecture_note: inception_v3 (aux disabled), resized input
+    architecture:
+      variant: inception_v3_aux_off
+    data_override:
+      image_size: 75
+    train_override:
+      batch_size: 32
+
+  - id: resnet18
+    name: ResNet18_CIFAR
+    model_family: ResNet
+    architecture_note: resnet18 with CIFAR conv stem
+    architecture:
+      variant: resnet18_cifar_stem

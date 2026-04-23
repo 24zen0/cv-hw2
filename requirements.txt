@@ -9,3 +9,5 @@ pillow
 datasets
 jupyterlab
 ipykernel
+pyyaml
+wandb

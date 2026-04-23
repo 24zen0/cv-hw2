@@ -10,7 +10,7 @@ I.	Try different combinations of hyperparameters and compare the performance of 
 II.	Change the CNN architectures to see how the performance change, e.g. number of convolutional layers, size of convolution kernels, pooling layers etc.
 III.	Summarize and compare the different model that you created above, and list the results in a table, including the basic information of the model such as number of conv./pooling layers, conv. kernel size etc., and the training time, training/testing accuracy/recall/F1score. 
 
-2)	(Optional) Use one or multiple of the AlexNet, VGG, Inception and ResNet architecture to create CNN models for image classification and train/test it with the selected dataset. Carefully configure the network and reduce the number of layers and samples when necessary, according to your computer capacity.
+2)	Use AlexNet, VGG, Inception and ResNet architecture to create CNN models for image classification and train/test it with the selected dataset. Carefully configure the network and reduce the number of layers and samples when necessary, according to your computer capacity.
 
 *Try to apply different image preprocessing to improve the model performance.
 **You may choose to reduce the number of classes and number of samples per class to reduce the computing cost.
